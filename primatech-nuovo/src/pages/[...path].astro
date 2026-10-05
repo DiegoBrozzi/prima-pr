@@ -1,0 +1,66 @@
+---
+/**
+ * Genera tutte le pagine in tutte le lingue, con URL tradotti.
+ * Italiano alla radice (/), altre lingue con prefisso (/en/, /fr/, /de/, /es/).
+ */
+import type { GetStaticPaths } from 'astro';
+import Home from '../views/Home.astro';
+import Catalog from '../views/Catalog.astro';
+import CategoryView from '../views/Category.astro';
+import MachineView from '../views/Machine.astro';
+import UsedList from '../views/UsedList.astro';
+import UsedDetail from '../views/UsedDetail.astro';
+import Parts from '../views/Parts.astro';
+import Services from '../views/Services.astro';
+import Company from '../views/Company.astro';
+import Contact from '../views/Contact.astro';
+import Thanks from '../views/Thanks.astro';
+import Legal from '../views/Legal.astro';
+import { categories, categoryPath, locales, machinePath, pagePath, usedPath, type Category, type Lang, type PageKey } from '../i18n';
+import { getMachines, getUsed, type Machine, type Used } from '../lib/data';
+
+type Props =
+  | { lang: Lang; view: Exclude<PageKey, 'privacy' | 'cookies'> }
+  | { lang: Lang; view: 'privacy' | 'cookies' }
+  | { lang: Lang; view: 'category'; category: Category }
+  | { lang: Lang; view: 'machine'; machine: Machine }
+  | { lang: Lang; view: 'usedDetail'; item: Used };
+
+export const getStaticPaths = (async () => {
+  const machines = await getMachines();
+  const used = await getUsed();
+  const pages: PageKey[] = ['home', 'machines', 'used', 'parts', 'services', 'company', 'contact', 'thanks', 'privacy', 'cookies'];
+  const out: { params: { path: string | undefined }; props: Props }[] = [];
+  const p = (lang: Lang, seg: string) => [lang === 'it' ? '' : lang, seg].filter(Boolean).join('/') || undefined;
+
+  for (const lang of locales) {
+    for (const view of pages) out.push({ params: { path: p(lang, pagePath(view, lang)) }, props: { lang, view } as Props });
+    for (const category of categories) out.push({ params: { path: p(lang, categoryPath(category, lang)) }, props: { lang, view: 'category', category } });
+    for (const machine of machines) out.push({ params: { path: p(lang, machinePath(machine.id, lang)) }, props: { lang, view: 'machine', machine } });
+    for (const item of used) out.push({ params: { path: p(lang, usedPath(item.id, lang)) }, props: { lang, view: 'usedDetail', item } });
+  }
+
+  const seen = new Set<string | undefined>();
+  for (const r of out) {
+    if (seen.has(r.params.path)) throw new Error(`URL duplicato: /${r.params.path ?? ''}`);
+    seen.add(r.params.path);
+  }
+  return out;
+}) satisfies GetStaticPaths;
+
+const props = Astro.props as Props;
+const { lang } = props;
+---
+
+{props.view === 'home' && <Home lang={lang} />}
+{props.view === 'machines' && <Catalog lang={lang} />}
+{props.view === 'category' && <CategoryView lang={lang} category={props.category} />}
+{props.view === 'machine' && <MachineView lang={lang} machine={props.machine} />}
+{props.view === 'used' && <UsedList lang={lang} />}
+{props.view === 'usedDetail' && <UsedDetail lang={lang} item={props.item} />}
+{props.view === 'parts' && <Parts lang={lang} />}
+{props.view === 'services' && <Services lang={lang} />}
+{props.view === 'company' && <Company lang={lang} />}
+{props.view === 'contact' && <Contact lang={lang} />}
+{props.view === 'thanks' && <Thanks lang={lang} />}
+{(props.view === 'privacy' || props.view === 'cookies') && <Legal lang={lang} page={props.view} />}

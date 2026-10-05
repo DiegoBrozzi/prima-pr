@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { alternates, fmt, url, useT, type Lang } from '../i18n';
+import { site } from '../site.config';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+
+<Base
+  lang={lang}
+  title={t.meta.thanks.title}
+  description={t.meta.thanks.description}
+  alternates={alternates((l) => url('thanks', l))}
+  current="contact"
+  noindex
+>
+  <PageHero lang={lang} eyebrow={t.contactPage.eyebrow} title={t.thanks.title} lead={fmt(t.thanks.text, { phone: site.phone })}>
+    <div class="btn-row">
+      <a class="btn" href={url('home', lang)}>{t.thanks.back} <Icon name="arrow" class="arrow" /></a>
+      <a class="btn btn--ghost" href={url('machines', lang)}>{t.thanks.catalog}</a>
+    </div>
+  </PageHero>
+</Base>

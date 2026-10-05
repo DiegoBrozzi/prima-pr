@@ -1,0 +1,39 @@
+---
+import Icon from './Icon.astro';
+import { url, useT, type Lang } from '../i18n';
+import { site } from '../site.config';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+
+<section class="section dark cta-band" aria-labelledby="cta-title">
+  <div class="techgrid" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow">{t.contactBand.eyebrow}</p>
+    <div class="cta-grid">
+      <div>
+        <h2 id="cta-title" data-reveal>
+          {t.contactBand.title[0]} <span class="soft">{t.contactBand.title[1]}</span>
+        </h2>
+      </div>
+      <div class="cta-contacts" data-reveal>
+        <p class="lead">{t.contactBand.text}</p>
+        <div>
+          <span class="mono">{t.common.phone}</span>
+          <a class="big" href={`tel:${site.phoneHref}`}>{site.phone}</a>
+        </div>
+        <div>
+          <span class="mono">{t.common.email}</span>
+          <a class="big" href={`mailto:${site.email}`}>{site.email}</a>
+        </div>
+        <div class="btn-row">
+          <a class="btn" href={url('contact', lang)}>{t.contactBand.cta} <Icon name="arrow" class="arrow" /></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

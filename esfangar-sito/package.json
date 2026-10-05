@@ -1,0 +1,20 @@
+{
+  "name": "es-fangar-sito",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Prototype of the new Es Fangar website (static, EN/ES/DE) — reference for the Shopify theme",
+  "type": "module",
+  "scripts": {
+    "build": "node src/build.mjs",
+    "serve": "node tools/serve.mjs dist 8797",
+    "images": "node tools/images.mjs",
+    "seo-assets": "node tools/seo-assets.mjs",
+    "map": "node tools/map.mjs",
+    "logo": "node tools/extract-logo.cjs"
+  },
+  "engines": { "node": ">=20" },
+  "devDependencies": {
+    "potrace": "^2.1.8",
+    "sharp": "^0.35.5"
+  }
+}

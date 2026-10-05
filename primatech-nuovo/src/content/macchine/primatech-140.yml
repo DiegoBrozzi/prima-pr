@@ -1,0 +1,42 @@
+model: Primatech 140
+brand: Primatech
+category: hot-foil
+madeInItaly: true
+order: 1
+image: ../../assets/img/primatech_140.jpg
+tagline:
+  it: Macchina automatica per stampa a caldo
+  en: Automatic hot foil stamping machine
+  fr: Machine automatique de dorure à chaud
+  de: Automatische Heißfolienprägemaschine
+  es: Máquina automática de estampación en caliente
+description:
+  it: "La sintesi della nostra esperienza: una soluzione tecnologica, economica e affidabile, competitiva sia sulle piccole tirature sia sui grandi volumi di produzione."
+  en: "The sum of our experience: a technologically advanced, cost-effective and reliable solution, competitive on short runs and high-volume production alike."
+  fr: "La synthèse de notre expérience : une solution technologique, économique et fiable, compétitive aussi bien sur les petits tirages que sur les grands volumes de production."
+  de: "Die Summe unserer Erfahrung: eine technologisch ausgereifte, wirtschaftliche und zuverlässige Lösung – wettbewerbsfähig bei Kleinauflagen ebenso wie bei großen Produktionsvolumen."
+  es: "La síntesis de nuestra experiencia: una solución tecnológica, económica y fiable, competitiva tanto en tiradas cortas como en grandes volúmenes de producción."
+features:
+  it: [Telaio riscaldato a 17 zone indipendenti, Doppio monitor touch screen, Air Blast Plus programmabile, Cambio bobine telescopico, Assistenza online]
+  en: [Heated chase with 17 independent zones, Dual touch-screen monitors, Programmable Air Blast Plus, Telescopic foil roll change, Online remote support]
+  fr: [Châssis chauffant à 17 zones indépendantes, Double écran tactile, Air Blast Plus programmable, Changement de bobines télescopique, Assistance en ligne]
+  de: [Beheizter Rahmen mit 17 unabhängigen Zonen, Zwei Touchscreen-Monitore, Programmierbares Air Blast Plus, Teleskopischer Folienrollenwechsel, Online-Fernservice]
+  es: [Bastidor calefactado de 17 zonas independientes, Doble monitor táctil, Air Blast Plus programable, Cambio de bobinas telescópico, Asistencia online]
+specs:
+  - key: sheetMax
+    value: 1100 × 1450 mm
+  - key: printArea
+    value: 1085 × 1440 mm
+  - key: pressure
+    value: 600 t
+  - key: speed
+    value: { it: 5.500 fogli/h, en: "5,500 sheets/h", fr: 5 500 feuilles/h, de: 5.500 Bogen/h, es: 5.500 hojas/h }
+  - key: accuracy
+    value: { it: "± 0,10 mm", en: "± 0.10 mm", fr: "± 0,10 mm", de: "± 0,10 mm", es: "± 0,10 mm" }
+  - key: materials
+    value:
+      it: carta 120 g/m² → cartone 2000 g/m², ondulato fino a 4 mm
+      en: paper 120 g/m² → board 2000 g/m², corrugated up to 4 mm
+      fr: papier 120 g/m² → carton 2000 g/m², ondulé jusqu'à 4 mm
+      de: Papier 120 g/m² → Karton 2000 g/m², Wellpappe bis 4 mm
+      es: papel 120 g/m² → cartón 2000 g/m², ondulado hasta 4 mm

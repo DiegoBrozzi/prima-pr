@@ -1,0 +1,22 @@
+---
+/** Segnaposto grafico per le macchine senza foto: sagoma tecnica + crocini. */
+interface Props {
+  label: string;
+  code: string;
+}
+const { label, code } = Astro.props;
+---
+
+<div class="ph" role="img" aria-label={`${code} – ${label}`}>
+  <svg viewBox="0 0 320 160" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5">
+    <path d="M20 132h280" stroke-dasharray="6 5" />
+    <rect x="34" y="62" width="88" height="70" />
+    <rect x="122" y="40" width="112" height="92" />
+    <rect x="234" y="70" width="58" height="62" />
+    <path d="M140 40V24h76v16M150 62h76M150 76h76" />
+    <rect x="248" y="82" width="30" height="16" />
+    <path d="M46 62V48h64v14" stroke-dasharray="3 4" />
+    <circle cx="178" cy="104" r="12" />
+  </svg>
+  <span class="ph-label">{label}</span>
+</div>

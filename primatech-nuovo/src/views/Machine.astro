@@ -1,0 +1,188 @@
+---
+import { getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Img from '../components/Img.astro';
+import Placeholder from '../components/Placeholder.astro';
+import MachineCard from '../components/MachineCard.astro';
+import Icon from '../components/Icon.astro';
+import { alternates, categoryUrl, machineUrl, pick, url, useT, type Lang } from '../i18n';
+import {
+  getMachines,
+  machineAlt,
+  machineDescription,
+  machineName,
+  machineTagline,
+  specValue,
+  type Machine as MachineEntry,
+} from '../lib/data';
+import { breadcrumbLd, productLd } from '../lib/seo';
+import { site } from '../site.config';
+
+interface Props {
+  lang: Lang;
+  machine: MachineEntry;
+}
+const { lang, machine: m } = Astro.props;
+const t = useT(lang);
+const name = machineName(m, lang);
+const tagline = machineTagline(m, lang);
+const description = machineDescription(m, lang);
+const features = pick(m.data.features, lang) ?? [];
+const specs = m.data.specs.map((s) => ({ name: t.specs[s.key], value: specValue(s.value, lang) }));
+const related = (await getMachines()).filter((x) => x.data.category === m.data.category && x.id !== m.id).slice(0, 3);
+const ogImg = m.data.image ? (await getImage({ src: m.data.image, width: 1200, format: 'jpg' })).src : undefined;
+const contactBase = url('contact', lang);
+const q = (topic: string) => `${contactBase}?${new URLSearchParams({ macchina: name, argomento: topic })}`;
+
+const crumbs = [
+  { label: t.nav.home, href: url('home', lang) },
+  { label: t.nav.machines, href: url('machines', lang) },
+  { label: t.categories[m.data.category].name, href: categoryUrl(m.data.category, lang) },
+  { label: name, href: machineUrl(m.id, lang) },
+];
+const metaDescription = `${name}: ${tagline}. ${specs
+  .slice(0, 3)
+  .map((s) => `${s.name} ${s.value}`)
+  .join(', ')}${specs.length ? '. ' : ''}${description}`.slice(0, 158);
+---
+
+<Base
+  lang={lang}
+  title={`${name} – ${tagline} | Primatech`}
+  description={metaDescription}
+  alternates={alternates((l) => machineUrl(m.id, l))}
+  current="machines"
+  ogImage={ogImg}
+  jsonLd={[
+    productLd({
+      name,
+      description,
+      category: t.categories[m.data.category].singular,
+      brand: m.data.brand,
+      image: ogImg,
+      url: machineUrl(m.id, lang),
+      madeInItaly: m.data.madeInItaly,
+      specs,
+    }),
+    breadcrumbLd(crumbs),
+  ]}
+>
+  <PageHero lang={lang} eyebrow={tagline} title={name} crumbs={crumbs}>
+    <div class="badges">
+      {m.data.madeInItaly ? <span class="badge badge--it">{t.common.madeInItaly}</span> : <span class="badge">{t.common.imported}</span>}
+      {m.data.brand && <span class="badge">{m.data.brand}</span>}
+    </div>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap product">
+      <div class="product-media cropmarks">
+        <div class="frame">
+          {
+            m.data.image ? (
+              <Img src={m.data.image} alt={machineAlt(m, lang)} sizes="(min-width: 1280px) 680px, (min-width: 900px) 52vw, 92vw" widths={[480, 700, 1000, 1200]} priority />
+            ) : (
+              <Placeholder code={name} label={t.common.photoSoon} />
+            )
+          }
+        </div>
+      </div>
+
+      <div class="product-body">
+        <p class="desc">{description}</p>
+
+        <dl class="meta-list">
+          {
+            m.data.brand && (
+              <div>
+                <dt>{t.machinePage.brand}</dt>
+                <dd>{m.data.brand}</dd>
+              </div>
+            )
+          }
+          <div>
+            <dt>{t.machinePage.category}</dt>
+            <dd><a href={categoryUrl(m.data.category, lang)}>{t.categories[m.data.category].name}</a></dd>
+          </div>
+          <div>
+            <dt>{t.machinePage.origin}</dt>
+            <dd>{m.data.madeInItaly ? t.machinePage.originIt : t.machinePage.originImport}</dd>
+          </div>
+        </dl>
+
+        <h2>{t.common.specs}</h2>
+        {
+          specs.length > 0 ? (
+            <dl class="specs specs--full">
+              {specs.map((s) => (
+                <div>
+                  <dt>{s.name}</dt>
+                  <dd>{s.value}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : (
+            <p class="note">{t.fallback.specsMissing}</p>
+          )
+        }
+
+        {
+          features.length > 0 && (
+            <>
+              <h2>{t.common.features}</h2>
+              <ul class="checklist">
+                {features.map((f) => (
+                  <li>{f}</li>
+                ))}
+              </ul>
+            </>
+          )
+        }
+
+        <div class="product-cta on-dark">
+          <h2>{t.machinePage.ctaTitle}</h2>
+          <p>{t.machinePage.ctaText}</p>
+          <div class="btn-row">
+            <a class="btn" href={q('quote')}>{t.common.requestInfo} <Icon name="arrow" class="arrow" /></a>
+            {
+              m.data.datasheet ? (
+                <a class="btn btn--ghost" href={m.data.datasheet} download>
+                  <Icon name="download" /> {t.common.downloadSheet}
+                </a>
+              ) : (
+                <a class="btn btn--ghost" href={q('sheet')}>{t.common.requestSheet}</a>
+              )
+            }
+          </div>
+          <div class="direct">
+            <a href={`tel:${site.phoneHref}`}>{site.phone}</a>
+            <a href={`mailto:${site.email}?subject=${encodeURIComponent(name)}`}>{site.email}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    related.length > 0 && (
+      <section class="section section--steel" aria-labelledby="related-title">
+        <div class="wrap">
+          <div class="section-head section-head--stack">
+            <div>
+              <p class="eyebrow">{t.categories[m.data.category].name}</p>
+              <h2 id="related-title">{t.common.related}</h2>
+            </div>
+          </div>
+          <ul class="grid grid--3">
+            {related.map((r) => (
+              <li>
+                <MachineCard m={r} lang={lang} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+</Base>

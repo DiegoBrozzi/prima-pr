@@ -1,0 +1,898 @@
+{
+  "main-house-arcade": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "main-house-alcove": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "main-house-stairs": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "winery-hall": {
+    "w": 4000,
+    "h": 2666,
+    "widths": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "winery-tasting-bar": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600,
+      2048
+    ],
+    "focus": 0
+  },
+  "winery-tasting-room": {
+    "w": 4000,
+    "h": 2666,
+    "widths": [
+      640,
+      1024,
+      1600,
+      2048
+    ],
+    "focus": 85
+  },
+  "winery-tanks": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "winery-gravity-hall": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "winery-barrels": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "arabic-house-interior": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "equestrian-aerial": {
+    "w": 4000,
+    "h": 2247,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "equestrian-track": {
+    "w": 4000,
+    "h": 2247,
+    "widths": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "landscape-coast": {
+    "w": 4000,
+    "h": 2247,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "gardens-aerial": {
+    "w": 4000,
+    "h": 2247,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "reserve-dusk": {
+    "w": 4000,
+    "h": 2247,
+    "widths": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "estate-sunset": {
+    "w": 4000,
+    "h": 2247,
+    "widths": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "main-house-dusk-wide": {
+    "w": 4000,
+    "h": 2247,
+    "widths": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "main-house-topdown": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "main-house-night": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "main-house-night-front": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "main-house-pool-night": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "main-house-sunset": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "vines-closeup": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "vineyard-manor": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "vineyard-wide": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "main-house-lawn": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "main-house-pool": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "hero-poster": {
+    "w": 720,
+    "h": 1278,
+    "widths": [
+      640,
+      720
+    ]
+  },
+  "arabic-house-pool": {
+    "w": 3908,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "arabic-house-lounge": {
+    "w": 3940,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "arabic-house-aerial": {
+    "w": 3955,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "arabic-house-garden": {
+    "w": 3969,
+    "h": 2666,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "mallorcan-house-garden": {
+    "w": 3959,
+    "h": 2665,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "mallorcan-house-living": {
+    "w": 3965,
+    "h": 2665,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "mallorcan-house-aerial": {
+    "w": 2621,
+    "h": 1481,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "mallorcan-house-pergola": {
+    "w": 3950,
+    "h": 2666,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "lodge-pool": {
+    "w": 1079,
+    "h": 789,
+    "widths": [
+      640,
+      1024
+    ]
+  },
+  "lodge-living": {
+    "w": 3954,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "lodge-terrace": {
+    "w": 4000,
+    "h": 2247,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "bottle-twentytwelve-white": {
+    "w": 1000,
+    "h": 1250,
+    "widths": [
+      360,
+      720
+    ]
+  },
+  "bottle-twentytwelve-pink": {
+    "w": 1000,
+    "h": 1250,
+    "widths": [
+      360,
+      720
+    ]
+  },
+  "bottle-sa-sivina": {
+    "w": 1000,
+    "h": 1250,
+    "widths": [
+      360,
+      720
+    ]
+  },
+  "bottle-sa-fita": {
+    "w": 1000,
+    "h": 1250,
+    "widths": [
+      360,
+      720
+    ]
+  },
+  "bottle-lo-cortinello": {
+    "w": 1000,
+    "h": 1250,
+    "widths": [
+      360,
+      720
+    ]
+  },
+  "bottle-genesis": {
+    "w": 1000,
+    "h": 1250,
+    "widths": [
+      360,
+      720
+    ]
+  },
+  "bottle-son-p": {
+    "w": 1000,
+    "h": 1250,
+    "widths": [
+      360,
+      720
+    ]
+  },
+  "bottle-fangar-elements": {
+    "w": 1000,
+    "h": 1250,
+    "widths": [
+      360,
+      720
+    ]
+  },
+  "bottle-n-amarat": {
+    "w": 1000,
+    "h": 1250,
+    "widths": [
+      360,
+      720
+    ]
+  },
+  "scene-sa-sivina": {
+    "w": 2024,
+    "h": 2024,
+    "widths": [
+      400,
+      720,
+      1200
+    ]
+  },
+  "scene-twentytwelve-white": {
+    "w": 2048,
+    "h": 2048,
+    "widths": [
+      400,
+      720,
+      1200
+    ]
+  },
+  "box-12": {
+    "w": 2048,
+    "h": 2048,
+    "widths": [
+      400,
+      720,
+      1200
+    ]
+  },
+  "hero-landscape-poster": {
+    "w": 1920,
+    "h": 1012,
+    "widths": [
+      640,
+      1024,
+      1600,
+      1920
+    ]
+  },
+  "scene-twentytwelve-pink": {
+    "w": 2048,
+    "h": 2048,
+    "widths": [
+      400,
+      720,
+      1200
+    ]
+  },
+  "scene-sa-fita": {
+    "w": 2024,
+    "h": 2024,
+    "widths": [
+      400,
+      720,
+      1200
+    ]
+  },
+  "scene-lo-cortinello": {
+    "w": 2024,
+    "h": 2024,
+    "widths": [
+      400,
+      720,
+      1200
+    ]
+  },
+  "scene-genesis": {
+    "w": 1800,
+    "h": 1800,
+    "widths": [
+      400,
+      720,
+      1200
+    ]
+  },
+  "scene-son-p": {
+    "w": 2024,
+    "h": 2024,
+    "widths": [
+      400,
+      720,
+      1200
+    ]
+  },
+  "scene-fangar-elements": {
+    "w": 2024,
+    "h": 2024,
+    "widths": [
+      400,
+      720,
+      1200
+    ]
+  },
+  "scene-n-amarat": {
+    "w": 2024,
+    "h": 2024,
+    "widths": [
+      400,
+      720,
+      1200
+    ]
+  },
+  "box-12-white": {
+    "w": 2048,
+    "h": 2048,
+    "widths": [
+      400,
+      720,
+      1200
+    ]
+  },
+  "arabic-house-exterior": {
+    "w": 4000,
+    "h": 2666,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "arabic-house-kitchen": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "arabic-house-bedroom": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "arabic-house-bedroom-2": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "arabic-house-bath": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "arabic-house-pool-aerial": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "mallorcan-house-dining": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "mallorcan-house-kitchen": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "mallorcan-house-bedroom": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "mallorcan-house-bedroom-2": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "mallorcan-house-bath": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "mallorcan-house-garden-2": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "lodge-aerial": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "lodge-forest": {
+    "w": 4000,
+    "h": 2247,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "arabic-house-living": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "arabic-house-hall": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "mallorcan-house-exterior": {
+    "w": 4000,
+    "h": 2247,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "mallorcan-house-view": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "lodge-stone-room": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "lodge-sitting": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "lodge-kitchen": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "lodge-bedroom": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "lodge-bedroom-2": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "lodge-bath": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "lodge-porch": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "lodge-pool-2": {
+    "w": 1056,
+    "h": 787,
+    "widths": [
+      640,
+      1024
+    ]
+  },
+  "main-house-living": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "main-house-garden": {
+    "w": 1521,
+    "h": 1521,
+    "widths": [
+      640,
+      1024,
+      1500
+    ]
+  },
+  "winery-tasting-table": {
+    "w": 4000,
+    "h": 2666,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "winery-foudres-table": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ],
+    "focus": 55
+  },
+  "main-house-palm-garden": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "winery-tasting-bottles": {
+    "w": 4000,
+    "h": 2666,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "main-house-terrace": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ],
+    "focus": 47
+  },
+  "estate-vineyard-valley": {
+    "w": 4000,
+    "h": 2250,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "winery-barrel-hall": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "winery-shop-counter": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "winery-bottle-wall": {
+    "w": 4000,
+    "h": 2667,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "house-garden-aerial": {
+    "w": 4000,
+    "h": 2247,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "equestrian-indoor-arena": {
+    "w": 4000,
+    "h": 2666,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  }
+}

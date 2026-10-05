@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+import logoWhite from '../assets/img/logo-white.svg';
+import fesrLogos from '../assets/img/loghi-progetto.jpg';
+import { categories, categoryUrl, langMeta, locales, url, useT, type Alternates, type Lang } from '../i18n';
+import { site } from '../site.config';
+
+interface Props {
+  lang: Lang;
+  alternates: Alternates;
+}
+const { lang, alternates } = Astro.props;
+const t = useT(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-top">
+    <div class="footer-brand">
+      <Image src={logoWhite} alt="Primatech" height={48} />
+      <p>{t.footer.tagline}</p>
+    </div>
+    <div>
+      <h2>{t.footer.machines}</h2>
+      <ul>
+        {
+          categories.map((c) => (
+            <li>
+              <a href={categoryUrl(c, lang)}>{t.categories[c].name}</a>
+            </li>
+          ))
+        }
+        <li><a href={url('used', lang)}>{t.nav.used}</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>{t.footer.company}</h2>
+      <ul>
+        <li><a href={url('company', lang)}>{t.nav.company}</a></li>
+        <li><a href={url('services', lang)}>{t.nav.services}</a></li>
+        <li><a href={url('parts', lang)}>{t.nav.parts}</a></li>
+        <li><a href={url('contact', lang)}>{t.nav.contact}</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>{t.footer.contacts}</h2>
+      <address>
+        <ul>
+          <li>
+            Primatech srl<br />{site.address.street}<br />{`${site.address.postalCode} ${site.address.locality} (${site.address.region})`}
+          </li>
+          <li><a href={`tel:${site.phoneHref}`}>{site.phone}</a></li>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li>{t.common.vat} {site.vatDisplay}</li>
+        </ul>
+      </address>
+    </div>
+  </div>
+
+  <div class="wrap footer-fesr">
+    <Image src={fesrLogos} alt={t.footer.fesrAlt} width={720} format="webp" quality={80} />
+    <p>{t.footer.fesr}</p>
+  </div>
+
+  <div class="wrap footer-bottom">
+    <p>© {year} Primatech srl · {t.common.vat} {site.vatDisplay} · {t.footer.rights}</p>
+    <ul>
+      <li><a href={url('privacy', lang)}>{t.footer.privacy}</a></li>
+      <li><a href={url('cookies', lang)}>{t.footer.cookies}</a></li>
+      {
+        locales
+          .filter((l) => l !== lang)
+          .map((l) => (
+            <li>
+              <a href={alternates[l]} hreflang={langMeta[l].hreflang} lang={langMeta[l].hreflang} title={langMeta[l].label}>
+                {langMeta[l].short}
+              </a>
+            </li>
+          ))
+      }
+    </ul>
+  </div>
+</footer>

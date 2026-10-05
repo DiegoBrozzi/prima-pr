@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://www.primatech.it/</loc>
+    <lastmod>2026-10-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.primatech.it/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.primatech.it/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.primatech.it/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.primatech.it/"/>
+    <image:image><image:loc>https://www.primatech.it/assets/img/primatech_140.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.primatech.it/assets/img/primatech_170-E-16.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.primatech.it/assets/img/SBL-1060-EFT.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.primatech.it/assets/img/SBL-1060-SE.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.primatech.it/assets/img/TS-1450W-OK.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://www.primatech.it/en/</loc>
+    <lastmod>2026-10-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.primatech.it/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.primatech.it/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.primatech.it/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.primatech.it/"/>
+  </url>
+  <url>
+    <loc>https://www.primatech.it/de/</loc>
+    <lastmod>2026-10-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.primatech.it/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.primatech.it/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.primatech.it/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.primatech.it/"/>
+  </url>
+</urlset>

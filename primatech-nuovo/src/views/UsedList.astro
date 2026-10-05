@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import UsedCard from '../components/UsedCard.astro';
+import ContactBand from '../components/ContactBand.astro';
+import Img from '../components/Img.astro';
+import Icon from '../components/Icon.astro';
+import { alternates, categories, url, useT, type Lang } from '../i18n';
+import { countByCategory, getUsed } from '../lib/data';
+import { breadcrumbLd } from '../lib/seo';
+import heroImg from '../assets/img/usato.jpg';
+import sellImg from '../assets/img/bkg.jpg';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const items = await getUsed();
+const counts = countByCategory(items);
+const present = categories.filter((c) => counts[c] > 0);
+const crumbs = [
+  { label: t.nav.home, href: url('home', lang) },
+  { label: t.nav.used, href: url('used', lang) },
+];
+---
+
+<Base
+  lang={lang}
+  title={t.meta.used.title}
+  description={t.meta.used.description}
+  alternates={alternates((l) => url('used', l))}
+  current="used"
+  jsonLd={[breadcrumbLd(crumbs)]}
+>
+  <PageHero lang={lang} eyebrow={t.usedPage.eyebrow} title={t.usedPage.title} lead={t.usedPage.lead} crumbs={crumbs} image={heroImg} />
+
+  <section class="section section--steel" aria-labelledby="used-list-title">
+    <div class="wrap">
+      <h2 id="used-list-title" class="sr-only">{t.usedPage.title}</h2>
+      {
+        present.length > 1 && (
+          <div class="filters" role="group" aria-label={t.common.filter} data-filter-group="used-list" hidden>
+            <button type="button" data-filter="all" aria-pressed="true">
+              {t.common.all}
+              <span class="n">{items.length}</span>
+            </button>
+            {present.map((c) => (
+              <button type="button" data-filter={c} aria-pressed="false">
+                {t.categories[c].name}
+                <span class="n">{counts[c]}</span>
+              </button>
+            ))}
+          </div>
+        )
+      }
+      <p class="sr-only" role="status" aria-live="polite" data-filter-status data-template={t.common.showing}></p>
+      {
+        items.length > 0 ? (
+          <ul class="grid grid--3" id="used-list">
+            {items.map((u) => (
+              <li data-cat={u.data.category}>
+                <UsedCard u={u} lang={lang} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="note">{t.usedPage.empty}</p>
+        )
+      }
+      <div class="hint-bar">
+        <div>
+          <p>{t.usedPage.notFoundTitle}</p>
+          <p class="muted">{t.usedPage.notFoundText}</p>
+        </div>
+        <a class="btn btn--navy" href={`${url('contact', lang)}?argomento=usedBuy`}>
+          {t.usedPage.notFoundCta} <Icon name="arrow" class="arrow" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="split" id="vendi" aria-labelledby="sell-title">
+    <div class="split-media parallax">
+      <Img src={sellImg} alt="" sizes="(min-width: 860px) 50vw, 100vw" widths={[600, 900, 1200]} />
+    </div>
+    <div class="split-body on-dark">
+      <p class="eyebrow eyebrow--light">{t.home.sellEyebrow}</p>
+      <h2 id="sell-title" data-reveal>{t.home.sellTitle[0]} {t.home.sellTitle[1]}</h2>
+      <p data-reveal>{t.home.sellText}</p>
+      <div class="btn-row" data-reveal>
+        <a class="btn" href={`${url('contact', lang)}?argomento=usedSell`}>{t.home.sellCta} <Icon name="arrow" class="arrow" /></a>
+      </div>
+    </div>
+  </section>
+
+  <ContactBand lang={lang} />
+</Base>

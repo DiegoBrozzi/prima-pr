@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import MachineCard from '../components/MachineCard.astro';
+import UsedCard from '../components/UsedCard.astro';
+import ContactBand from '../components/ContactBand.astro';
+import { alternates, categories, categoryUrl, url, useT, type Category, type Lang } from '../i18n';
+import { getMachines, getUsed } from '../lib/data';
+import { breadcrumbLd } from '../lib/seo';
+
+interface Props {
+  lang: Lang;
+  category: Category;
+}
+const { lang, category } = Astro.props;
+const t = useT(lang);
+const cat = t.categories[category];
+const machines = (await getMachines()).filter((m) => m.data.category === category);
+const used = (await getUsed()).filter((u) => u.data.category === category && u.data.status !== 'sold');
+const heroImg = machines.find((m) => m.data.image)?.data.image;
+const crumbs = [
+  { label: t.nav.home, href: url('home', lang) },
+  { label: t.nav.machines, href: url('machines', lang) },
+  { label: cat.name, href: categoryUrl(category, lang) },
+];
+---
+
+<Base
+  lang={lang}
+  title={`${cat.long} | Primatech`}
+  description={cat.intro}
+  alternates={alternates((l) => categoryUrl(category, l))}
+  current="machines"
+  jsonLd={[breadcrumbLd(crumbs)]}
+>
+  <PageHero lang={lang} eyebrow={t.categoryPage.eyebrow} title={cat.long} lead={cat.intro} crumbs={crumbs} image={heroImg} />
+
+  <section class="section section--steel" aria-labelledby="models-title">
+    <div class="wrap">
+      <nav class="filters" aria-label={t.common.filter}>
+        <a href={url('machines', lang)}>{t.categoryPage.allMachines}</a>
+        {
+          categories.map((c) => (
+            <a href={categoryUrl(c, lang)} aria-current={c === category ? 'page' : undefined}>
+              {t.categories[c].name}
+            </a>
+          ))
+        }
+      </nav>
+      <h2 id="models-title" class="sr-only">{cat.long}</h2>
+      <ul class="grid grid--3">
+        {
+          machines.map((m) => (
+            <li>
+              <MachineCard m={m} lang={lang} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {
+    used.length > 0 && (
+      <section class="section" aria-labelledby="used-title">
+        <div class="wrap">
+          <div class="section-head section-head--stack">
+            <div>
+              <p class="eyebrow">{t.nav.used}</p>
+              <h2 id="used-title">{t.categoryPage.usedIn}</h2>
+            </div>
+          </div>
+          <ul class="grid grid--3">
+            {used.map((u) => (
+              <li>
+                <UsedCard u={u} lang={lang} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <ContactBand lang={lang} />
+</Base>

@@ -1,0 +1,86 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/img/logo.svg';
+import logoWhite from '../assets/img/logo-white.svg';
+import Icon from './Icon.astro';
+import { langMeta, locales, url, useT, type Alternates, type Lang, type PageKey } from '../i18n';
+import { site } from '../site.config';
+
+interface Props {
+  lang: Lang;
+  current?: PageKey;
+  alternates: Alternates;
+}
+const { lang, current, alternates } = Astro.props;
+const t = useT(lang);
+const items: { key: PageKey; label: string }[] = [
+  { key: 'machines', label: t.nav.machines },
+  { key: 'used', label: t.nav.used },
+  { key: 'parts', label: t.nav.parts },
+  { key: 'services', label: t.nav.services },
+  { key: 'company', label: t.nav.company },
+  { key: 'contact', label: t.nav.contact },
+];
+---
+
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href={url('home', lang)} aria-label={`Primatech – ${t.nav.home}`}>
+      <Image src={logoWhite} alt="" class="logo-light" height={44} loading="eager" />
+      <Image src={logo} alt="" class="logo-dark" height={44} loading="eager" />
+    </a>
+
+    <nav class="nav" id="site-nav" aria-label={t.nav.main} data-nav>
+      <ul class="nav-list">
+        {
+          items.map((i) => (
+            <li>
+              <a href={url(i.key, lang)} aria-current={current === i.key ? 'page' : undefined}>
+                {i.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="nav-mobile-extra">
+        <a class="btn" href={url('contact', lang)}>{t.nav.cta} <Icon name="arrow" class="arrow" /></a>
+        <a class="btn btn--ghost" href={`tel:${site.phoneHref}`}><Icon name="phone" /> {site.phone}</a>
+        <a class="btn btn--ghost" href={`mailto:${site.email}`}><Icon name="mail" /> {site.email}</a>
+      </div>
+    </nav>
+
+    <div class="header-tools">
+      <details class="lang" data-lang-menu>
+        <summary aria-label={`${t.nav.language}: ${langMeta[lang].label}`}>
+          <Icon name="globe" />
+          <span class="lang-label">{langMeta[lang].short}</span>
+          <Icon name="chevron" class="chev" />
+        </summary>
+        <ul class="lang-menu">
+          {
+            locales.map((l) => (
+              <li>
+                <a
+                  href={alternates[l]}
+                  hreflang={langMeta[l].hreflang}
+                  lang={langMeta[l].hreflang}
+                  aria-current={l === lang ? 'true' : undefined}
+                  data-lang-link={l}
+                >
+                  {langMeta[l].label}
+                  <span class="mono">{langMeta[l].short}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+      <a class="btn btn--sm header-cta" href={url('contact', lang)}>{t.nav.cta}</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
+        <span data-menu-label data-open={t.nav.menu} data-close={t.nav.close}>{t.nav.menu}</span>
+        <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+  <div class="progress" aria-hidden="true"></div>
+</header>

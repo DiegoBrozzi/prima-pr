@@ -1,0 +1,16 @@
+model: Accoppiatrice foglio-foglio
+title:
+  it: Accoppiatrice automatica
+  en: Automatic laminator
+  fr: Contrecolleuse automatique
+  de: Kaschierautomat
+  es: Laminadora automática
+category: laminator
+order: 10
+image: ../../assets/img/accoppiatrice.jpg
+tagline:
+  it: Linea automatica di accoppiatura foglio-foglio
+  en: Automatic sheet-to-sheet laminating line
+  fr: Ligne automatique de contrecollage feuille à feuille
+  de: Automatische Bogen-auf-Bogen-Kaschierlinie
+  es: Línea automática de laminado hoja a hoja

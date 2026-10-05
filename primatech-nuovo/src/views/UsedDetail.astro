@@ -1,0 +1,117 @@
+---
+import { getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Img from '../components/Img.astro';
+import Placeholder from '../components/Placeholder.astro';
+import Icon from '../components/Icon.astro';
+import { alternates, categoryUrl, pick, url, usedUrl, useT, type Lang } from '../i18n';
+import type { Used } from '../lib/data';
+import { breadcrumbLd } from '../lib/seo';
+import { site } from '../site.config';
+
+interface Props {
+  lang: Lang;
+  item: Used;
+}
+const { lang, item: u } = Astro.props;
+const t = useT(lang);
+const title = [u.data.brand, u.data.model].filter(Boolean).join(' ');
+const desc = pick(u.data.description, lang);
+const [main, ...rest] = u.data.images ?? [];
+const ogImg = main ? (await getImage({ src: main, width: 1200, format: 'jpg' })).src : undefined;
+const sold = u.data.status === 'sold';
+const contactHref = `${url('contact', lang)}?${new URLSearchParams({ macchina: `${title} (${t.nav.used})`, argomento: 'usedBuy' })}`;
+const crumbs = [
+  { label: t.nav.home, href: url('home', lang) },
+  { label: t.nav.used, href: url('used', lang) },
+  { label: title, href: usedUrl(u.id, lang) },
+];
+const facts = [
+  { k: t.usedPage.statusLabel, v: t.usedPage.status[u.data.status] },
+  u.data.year ? { k: t.usedPage.year, v: String(u.data.year) } : null,
+  u.data.sheetFormat ? { k: t.usedPage.format, v: u.data.sheetFormat } : null,
+  u.data.condition ? { k: t.usedPage.conditionLabel, v: t.usedPage.condition[u.data.condition] } : null,
+  u.data.location ? { k: t.usedPage.location, v: u.data.location } : null,
+].filter((f): f is { k: string; v: string } => f !== null);
+const singular = t.categories[u.data.category].singular;
+const metaDesc = `${title} – ${singular} (${t.nav.used}). ${desc ?? t.usedPage.noDesc}`.slice(0, 158);
+const statusClass = { available: 'badge--ok', negotiation: 'badge--warn', sold: 'badge--sold' }[u.data.status];
+---
+
+<Base
+  lang={lang}
+  title={`${title} – ${singular} | Primatech`}
+  description={metaDesc}
+  alternates={alternates((l) => usedUrl(u.id, l))}
+  current="used"
+  ogImage={ogImg}
+  noindex={sold}
+  jsonLd={[breadcrumbLd(crumbs)]}
+>
+  <PageHero lang={lang} eyebrow={singular} title={title} crumbs={crumbs}>
+    <div class="badges">
+      <span class={`badge ${statusClass}`}>{t.usedPage.status[u.data.status]}</span>
+    </div>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap product">
+      <div class="product-media cropmarks">
+        <div class="frame frame--cover">
+          {
+            main ? (
+              <Img src={main} alt={title} sizes="(min-width: 1280px) 680px, (min-width: 900px) 52vw, 92vw" widths={[480, 700, 1000, 1200]} priority />
+            ) : (
+              <Placeholder code={title} label={t.common.photoSoon} />
+            )
+          }
+        </div>
+        {
+          rest.length > 0 && (
+            <ul class="thumbs">
+              {rest.map((img, i) => (
+                <li>
+                  <Img src={img} alt={`${title} – ${i + 2}`} sizes="96px" widths={[192]} />
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+
+      <div class="product-body">
+        <dl class="meta-list">
+          {
+            facts.map((f) => (
+              <div>
+                <dt>{f.k}</dt>
+                <dd>{f.v}</dd>
+              </div>
+            ))
+          }
+          <div>
+            <dt>{t.machinePage.category}</dt>
+            <dd><a href={categoryUrl(u.data.category, lang)}>{t.categories[u.data.category].name}</a></dd>
+          </div>
+        </dl>
+
+        <h2>{t.common.features}</h2>
+        {desc ? <p class="desc">{desc}</p> : <p class="note">{t.usedPage.noDesc}</p>}
+
+        <div class="product-cta on-dark">
+          <h2>{t.machinePage.ctaTitle}</h2>
+          <p>{t.machinePage.ctaText}</p>
+          <div class="btn-row">
+            <a class="btn" href={contactHref}>{t.usedPage.ask} <Icon name="arrow" class="arrow" /></a>
+            <a class="btn btn--ghost" href={url('used', lang)}>{t.usedPage.back}</a>
+          </div>
+          <div class="direct">
+            <a href={`tel:${site.phoneHref}`}>{site.phone}</a>
+            <a href={`mailto:${site.email}?subject=${encodeURIComponent(title)}`}>{site.email}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,41 @@
+---
+import Img from './Img.astro';
+import Placeholder from './Placeholder.astro';
+import Icon from './Icon.astro';
+import { machineUrl, useT, type Lang } from '../i18n';
+import { machineAlt, machineName, machineTagline, type Machine } from '../lib/data';
+
+interface Props {
+  m: Machine;
+  lang: Lang;
+  headingLevel?: 'h2' | 'h3';
+}
+const { m, lang, headingLevel = 'h3' } = Astro.props;
+const t = useT(lang);
+const H = headingLevel;
+const name = machineName(m, lang);
+---
+
+<article class="card cropmarks">
+  <div class="card-media">
+    <div class="badges">
+      {m.data.madeInItaly ? <span class="badge badge--it">{t.common.madeInItaly}</span> : <span class="badge">{t.common.imported}</span>}
+    </div>
+    {
+      m.data.image ? (
+        <Img src={m.data.image} alt={machineAlt(m, lang)} sizes="(min-width: 1280px) 400px, (min-width: 700px) 45vw, 92vw" widths={[400, 640, 900]} />
+      ) : (
+        <Placeholder code={name} label={t.common.photoSoon} />
+      )
+    }
+  </div>
+  <div class="card-body">
+    <p class="card-kicker">{t.categories[m.data.category].name}{m.data.brand && ` · ${m.data.brand}`}</p>
+    <H><a href={machineUrl(m.id, lang)}>{name}</a></H>
+    <p class="card-text">{machineTagline(m, lang)}</p>
+    <div class="card-foot">
+      <span class="mono">{t.common.discover}</span>
+      <span class="card-go" aria-hidden="true"><Icon name="arrow" /></span>
+    </div>
+  </div>
+</article>

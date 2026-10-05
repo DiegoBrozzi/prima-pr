@@ -1,0 +1,94 @@
+# Pannello di gestione delle macchine usate (Sveltia CMS).
+# Ogni modifica salvata crea un commit su GitHub; Cloudflare Pages ripubblica il sito in 1–2 minuti.
+# TODO lancio: impostare "repo" e "base_url" (vedi CHECKLIST-LANCIO.md, sezione "Pannello usato").
+
+backend:
+  name: github
+  repo: DiegoBrozzi/primatech-sito # TODO: repository definitivo
+  branch: main
+  base_url: https://primatech-cms-auth.example.workers.dev # TODO: URL del servizio di accesso (sveltia-cms-auth)
+  commit_messages:
+    create: 'Usato: aggiunta {{slug}}'
+    update: 'Usato: modifica {{slug}}'
+    delete: 'Usato: rimozione {{slug}}'
+    uploadMedia: 'Usato: foto {{path}}'
+    deleteMedia: 'Usato: rimozione foto {{path}}'
+
+locale: it
+output:
+  omit_empty_optional_fields: true
+site_url: https://www.primatech.it
+display_url: https://www.primatech.it/usato/
+media_folder: src/assets/usato
+public_folder: ../../assets/usato
+
+collections:
+  - name: usato
+    label: Macchine usate
+    label_singular: Macchina usata
+    description: >-
+      Le macchine usate pubblicate sul sito. La descrizione in italiano è obbligatoria; le altre lingue sono facoltative
+      (se mancano, il sito mostra l'inglese o l'italiano). Per togliere una macchina dal sito senza cancellarla,
+      disattiva "Pubblicata".
+    folder: src/content/usato
+    extension: yml
+    format: yml
+    create: true
+    delete: true
+    slug: '{{model}}'
+    identifier_field: model
+    summary: '{{model}} · {{status}}'
+    sortable_fields: [model, year, status, order]
+    media_folder: /src/assets/usato
+    public_folder: ../../assets/usato
+    fields:
+      - { name: model, label: Modello, widget: string, hint: 'Es. SP 104-E' }
+      - { name: brand, label: Marca, widget: string, required: false, hint: 'Es. Bobst, Heidelberg, SBL' }
+      - name: category
+        label: Categoria
+        widget: select
+        options:
+          - { label: Stampa a caldo, value: hot-foil }
+          - { label: Fustellatrice, value: die-cutting }
+          - { label: Piega-incolla, value: folder-gluer }
+          - { label: Accoppiatrice, value: laminator }
+          - { label: Flessografica, value: flexo }
+      - name: status
+        label: Disponibilità
+        widget: select
+        default: available
+        options:
+          - { label: Disponibile, value: available }
+          - { label: In trattativa, value: negotiation }
+          - { label: Venduta, value: sold }
+      - { name: year, label: Anno, widget: number, value_type: int, min: 1950, max: 2100, required: false }
+      - { name: sheetFormat, label: Formato foglio, widget: string, required: false, hint: 'Es. 720 × 1040 mm' }
+      - name: condition
+        label: Stato della macchina
+        widget: select
+        required: false
+        options:
+          - { label: Revisionata, value: overhauled }
+          - { label: Funzionante, visibile in produzione, value: working }
+          - { label: Da revisionare, value: as-is }
+      - { name: location, label: Ubicazione, widget: string, required: false, hint: 'Es. Perugia (IT)' }
+      - name: images
+        label: Foto
+        label_singular: Foto
+        widget: list
+        required: false
+        hint: 'La prima foto è quella principale. Usa foto orizzontali, almeno 1200 px di larghezza.'
+        field: { name: image, label: Foto, widget: image }
+      - name: description
+        label: Descrizione
+        widget: object
+        required: false
+        collapsed: false
+        fields:
+          - { name: it, label: Italiano, widget: text }
+          - { name: en, label: Inglese, widget: text, required: false }
+          - { name: fr, label: Francese, widget: text, required: false }
+          - { name: de, label: Tedesco, widget: text, required: false }
+          - { name: es, label: Spagnolo, widget: text, required: false }
+      - { name: published, label: Pubblicata, widget: boolean, default: true }
+      - { name: order, label: Ordine, widget: number, value_type: int, default: 100, hint: 'Numero più basso = mostrata prima' }

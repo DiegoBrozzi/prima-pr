@@ -1,0 +1,44 @@
+---
+import type { ImageMetadata } from 'astro';
+import Img from './Img.astro';
+import { useT, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  crumbs?: { label: string; href?: string }[];
+  image?: ImageMetadata;
+}
+const { lang, eyebrow, title, lead, crumbs = [], image } = Astro.props;
+const t = useT(lang);
+---
+
+<section class="page-hero dark">
+  {
+    image && (
+      <div class="page-hero-media parallax" aria-hidden="true">
+        <Img src={image} alt="" sizes="100vw" priority />
+      </div>
+    )
+  }
+  <div class="techgrid" aria-hidden="true"></div>
+  <div class="wrap">
+    {
+      crumbs.length > 0 && (
+        <nav class="breadcrumb" aria-label={t.common.breadcrumb}>
+          <ol>
+            {crumbs.map((c, i) => (
+              <li>{c.href && i < crumbs.length - 1 ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>
+            ))}
+          </ol>
+        </nav>
+      )
+    }
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{title}</h1>
+    {lead && <p class="lead">{lead}</p>}
+    <slot />
+  </div>
+</section>

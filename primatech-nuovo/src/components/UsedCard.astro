@@ -1,0 +1,45 @@
+---
+import Img from './Img.astro';
+import Placeholder from './Placeholder.astro';
+import Icon from './Icon.astro';
+import { usedUrl, useT, type Lang } from '../i18n';
+import type { Used } from '../lib/data';
+
+interface Props {
+  u: Used;
+  lang: Lang;
+}
+const { u, lang } = Astro.props;
+const t = useT(lang);
+const s = u.data.status;
+const cover = u.data.images?.[0];
+const badgeClass = { available: 'badge badge--ok', negotiation: 'badge badge--warn', sold: 'badge badge--sold' }[s];
+const title = [u.data.brand, u.data.model].filter(Boolean).join(' ');
+const facts = [
+  u.data.year && `${t.usedPage.year} ${u.data.year}`,
+  u.data.sheetFormat,
+  u.data.condition && t.usedPage.condition[u.data.condition],
+].filter(Boolean);
+---
+
+<article class="card cropmarks">
+  <div class="card-media card-media--cover">
+    <div class="badges"><span class={badgeClass}>{t.usedPage.status[s]}</span></div>
+    {
+      cover ? (
+        <Img src={cover} alt={title} sizes="(min-width: 1280px) 400px, (min-width: 700px) 45vw, 92vw" widths={[400, 640, 900]} />
+      ) : (
+        <Placeholder code={title} label={t.common.photoSoon} />
+      )
+    }
+  </div>
+  <div class="card-body">
+    <p class="card-kicker">{t.categories[u.data.category].singular}</p>
+    <h3><a href={usedUrl(u.id, lang)}>{title}</a></h3>
+    {facts.length > 0 && <p class="card-text">{facts.join(' · ')}</p>}
+    <div class="card-foot">
+      <span class="mono">{t.common.discover}</span>
+      <span class="card-go" aria-hidden="true"><Icon name="arrow" /></span>
+    </div>
+  </div>
+</article>

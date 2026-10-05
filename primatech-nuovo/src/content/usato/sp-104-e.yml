@@ -1,0 +1,7 @@
+model: SP 104-E
+category: die-cutting
+status: available
+order: 22
+images:
+  - ../../assets/usato/sp-104-e.jpg
+published: true

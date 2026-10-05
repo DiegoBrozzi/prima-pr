@@ -1,0 +1,112 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ContactBand from '../components/ContactBand.astro';
+import Img from '../components/Img.astro';
+import { alternates, url, useT, type Lang } from '../i18n';
+import { breadcrumbLd, organizationLd } from '../lib/seo';
+import heroImg from '../assets/img/bkg.jpg';
+import storyImg from '../assets/img/primatech_140.jpg';
+import imgGlobal from '../assets/img/global.jpg';
+import imgSmart from '../assets/img/smart.jpg';
+import imgPassion from '../assets/img/passion.jpg';
+import fesrLogos from '../assets/img/loghi-progetto.jpg';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const c = t.companyPage;
+const valueImgs = [
+  { src: imgGlobal, cls: 'stack-card--global' },
+  { src: imgSmart, cls: 'stack-card--smart' },
+  { src: imgPassion, cls: 'stack-card--passion' },
+];
+const crumbs = [
+  { label: t.nav.home, href: url('home', lang) },
+  { label: t.nav.company, href: url('company', lang) },
+];
+---
+
+<Base
+  lang={lang}
+  title={t.meta.company.title}
+  description={t.meta.company.description}
+  alternates={alternates((l) => url('company', l))}
+  current="company"
+  jsonLd={[organizationLd(lang), breadcrumbLd(crumbs)]}
+>
+  <PageHero lang={lang} eyebrow={c.eyebrow} title={c.title} lead={c.lead} crumbs={crumbs} image={heroImg} />
+
+  <section class="section" aria-labelledby="story-title">
+    <div class="wrap two-col">
+      <div class="prose">
+        <h2 id="story-title" class="sr-only">{c.eyebrow}</h2>
+        {c.story.map((p, i) => <p class={i === 0 ? 'lead' : undefined} data-reveal>{p}</p>)}
+      </div>
+      <div class="feature-media cropmarks" data-reveal="cut">
+        <Img src={storyImg} alt="Primatech 140" sizes="(min-width: 860px) 45vw, 92vw" widths={[480, 700, 1000]} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--steel" aria-labelledby="numbers-title">
+    <div class="wrap">
+      <div class="section-head section-head--stack">
+        <div>
+          <p class="eyebrow">{c.eyebrow}</p>
+          <h2 id="numbers-title" data-reveal>{c.numbersTitle}</h2>
+        </div>
+      </div>
+      <dl class="numbers" data-stagger>
+        {
+          c.numbers.map((n) => (
+            <div data-reveal>
+              <dt>{n.label}</dt>
+              <dd>{n.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="values-title">
+    <div class="wrap">
+      <div class="section-head section-head--stack">
+        <div>
+          <p class="eyebrow">{t.home.valuesEyebrow}</p>
+          <h2 id="values-title" data-reveal>{c.valuesTitle}</h2>
+        </div>
+      </div>
+      <ul class="stack">
+        {
+          t.home.values.map((v, i) => (
+            <li class:list={['stack-card', valueImgs[i].cls]}>
+              <Img src={valueImgs[i].src} alt="" sizes="(min-width: 1280px) 1200px, 100vw" widths={[800, 1200, 1600]} />
+              <div class="body" data-reveal>
+                <span class="idx">0{i + 1} / 03</span>
+                <h3>{v.title}</h3>
+                <p>{v.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--steel" aria-labelledby="fesr-title">
+    <div class="wrap two-col">
+      <div>
+        <p class="eyebrow">{c.fesrTitle}</p>
+        <h2 id="fesr-title" class="sr-only">{c.fesrTitle}</h2>
+        <p class="lead">{t.footer.fesr}</p>
+      </div>
+      <Img src={fesrLogos} alt={t.footer.fesrAlt} sizes="(min-width: 860px) 45vw, 92vw" widths={[600]} />
+    </div>
+  </section>
+
+  <ContactBand lang={lang} />
+</Base>

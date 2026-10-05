@@ -1,0 +1,41 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "primatech-sito",
+      "runtimeExecutable": "powershell.exe",
+      "runtimeArgs": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "C:\\Users\\Diego\\AppData\\Local\\Temp\\claude\\C--Users-Diego-Desktop-Claudio-Code\\a97d5115-5194-4338-ae47-b2ce18deb215\\scratchpad\\serve.ps1", "-Port", "8767"],
+      "port": 8767
+    },
+    {
+      "name": "intertec-sito",
+      "runtimeExecutable": "powershell.exe",
+      "runtimeArgs": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "C:\\Users\\Diego\\AppData\\Local\\Temp\\claude\\C--Users-Diego-Desktop-Claudio-Code\\330955d8-73a4-4fb4-81d6-574f106c4ae5\\scratchpad\\serve.ps1", "-Port", "8781"],
+      "port": 8781
+    },
+    {
+      "name": "primatech-nuovo",
+      "runtimeExecutable": "C:\\Users\\Diego\\Desktop\\Claudio Code\\.tools\\node\\node.exe",
+      "runtimeArgs": ["C:\\Users\\Diego\\Desktop\\Claudio Code\\primatech-nuovo\\node_modules\\astro\\bin\\astro.mjs", "dev", "--root", "C:\\Users\\Diego\\Desktop\\Claudio Code\\primatech-nuovo", "--port", "4329"],
+      "port": 4329
+    },
+    {
+      "name": "topmelon-sito",
+      "runtimeExecutable": "C:\\Users\\Diego\\Desktop\\Claudio Code\\.tools\\node\\node.exe",
+      "runtimeArgs": ["C:\\Users\\Diego\\AppData\\Local\\Temp\\claude\\C--Users-Diego-Desktop-Claudio-Code\\e3170683-d3a4-44ea-9c6c-557a8f11a722\\scratchpad\\serve.mjs", "C:\\Users\\Diego\\Desktop\\Claudio Code\\topmelon-sito", "8790"],
+      "port": 8790
+    },
+    {
+      "name": "150-barber-club-sito",
+      "runtimeExecutable": "C:\\Users\\Diego\\Desktop\\Claudio Code\\.tools\\node\\node.exe",
+      "runtimeArgs": ["C:\\Users\\Diego\\Desktop\\Claudio Code\\.tools\\serve.mjs", "C:\\Users\\Diego\\Desktop\\Claudio Code\\150-barber-club-sito", "8795"],
+      "port": 8795
+    },
+    {
+      "name": "esfangar-sito",
+      "runtimeExecutable": "C:\\Users\\Diego\\Desktop\\Claudio Code\\.tools\\node\\node.exe",
+      "runtimeArgs": ["C:\\Users\\Diego\\Desktop\\Claudio Code\\.tools\\serve.mjs", "C:\\Users\\Diego\\Desktop\\Claudio Code\\esfangar-sito\\dist", "8797"],
+      "port": 8797
+    }
+  ]
+}

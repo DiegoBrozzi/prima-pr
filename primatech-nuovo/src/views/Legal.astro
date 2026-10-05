@@ -1,0 +1,124 @@
+---
+/**
+ * Informativa privacy e cookie policy.
+ * BOZZE: da far validare a un consulente privacy prima della pubblicazione.
+ * Testo completo in italiano e inglese; FR/DE/ES mostrano la versione inglese
+ * finché non saranno disponibili le traduzioni validate.
+ */
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { alternates, url, useT, type Lang } from '../i18n';
+import { site } from '../site.config';
+
+interface Props {
+  lang: Lang;
+  page: 'privacy' | 'cookies';
+}
+const { lang, page } = Astro.props;
+const t = useT(lang);
+const textLang = lang === 'it' ? 'it' : 'en';
+const updated = '2026-10-05';
+const owner = `${site.name}, ${site.address.street}, ${site.address.postalCode} ${site.address.locality} (${site.address.region}), ${t.common.vat} ${site.vatDisplay}`;
+const meta = t.meta[page];
+---
+
+<Base lang={lang} title={meta.title} description={meta.description} alternates={alternates((l) => url(page, l))}>
+  <PageHero lang={lang} eyebrow={page === 'privacy' ? t.footer.privacy : t.footer.cookies} title={meta.title.split(' | ')[0]} />
+
+  <section class="section">
+    <div class="wrap">
+      <p class="note legal-note">{t.legal.draft}</p>
+      <div class="prose" lang={textLang}>
+        {
+          page === 'privacy' && textLang === 'it' && (
+            <>
+              <h2>Titolare del trattamento</h2>
+              <p>{owner}. Email: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+              <h2>Dati raccolti e finalità</h2>
+              <p>
+                Tramite il modulo di contatto raccogliamo nome, azienda, paese, email, telefono (facoltativo) e il contenuto del messaggio, al solo scopo di rispondere alla richiesta e, se richiesto, formulare un'offerta.
+              </p>
+              <h2>Base giuridica</h2>
+              <p>Esecuzione di misure precontrattuali adottate su richiesta dell'interessato (art. 6.1.b GDPR).</p>
+              <h2>Conservazione</h2>
+              <p>I dati sono conservati per il tempo necessario a gestire la richiesta e l'eventuale rapporto commerciale, e comunque non oltre i termini di legge.</p>
+              <h2>Destinatari e fornitori</h2>
+              <ul>
+                <li>Cloudflare, Inc. – hosting del sito e protezione antispam (Turnstile).</li>
+                <li>Fornitore del servizio di invio email – recapito delle richieste alla nostra casella.</li>
+              </ul>
+              <p>I fornitori agiscono come responsabili del trattamento; eventuali trasferimenti extra UE avvengono sulla base di garanzie adeguate (es. clausole contrattuali standard).</p>
+              <h2>Diritti dell'interessato</h2>
+              <p>
+                Puoi chiedere accesso, rettifica, cancellazione, limitazione, portabilità o opporti al trattamento scrivendo a <a href={`mailto:${site.email}`}>{site.email}</a>. Hai inoltre diritto di proporre reclamo al Garante per la protezione dei dati personali.
+              </p>
+            </>
+          )
+        }
+        {
+          page === 'privacy' && textLang === 'en' && (
+            <>
+              <h2>Data controller</h2>
+              <p>{owner}. Email: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+              <h2>Data collected and purposes</h2>
+              <p>
+                Through the contact form we collect your name, company, country, email, phone (optional) and message, solely to reply to your request and, if requested, to prepare an offer.
+              </p>
+              <h2>Legal basis</h2>
+              <p>Steps taken at your request prior to entering into a contract (Art. 6(1)(b) GDPR).</p>
+              <h2>Retention</h2>
+              <p>Data is kept for as long as needed to handle the request and any resulting business relationship, and in any case no longer than required by law.</p>
+              <h2>Recipients and providers</h2>
+              <ul>
+                <li>Cloudflare, Inc. – website hosting and anti-spam protection (Turnstile).</li>
+                <li>Email delivery provider – delivery of requests to our mailbox.</li>
+              </ul>
+              <p>Providers act as data processors; any transfers outside the EU rely on appropriate safeguards (e.g. standard contractual clauses).</p>
+              <h2>Your rights</h2>
+              <p>
+                You may request access, rectification, erasure, restriction, portability or object to processing by writing to <a href={`mailto:${site.email}`}>{site.email}</a>. You also have the right to lodge a complaint with the Italian Data Protection Authority (Garante per la protezione dei dati personali).
+              </p>
+            </>
+          )
+        }
+        {
+          page === 'cookies' && textLang === 'it' && (
+            <>
+              <h2>Cookie utilizzati</h2>
+              <p>
+                Questo sito non utilizza cookie di profilazione né strumenti di statistica. Non sono presenti mappe, video o pulsanti social di terze parti che installano cookie: per questo non è necessario un banner di consenso.
+              </p>
+              <h2>Archiviazione locale</h2>
+              <p>
+                Il sito memorizza nel tuo browser solo la preferenza di lingua (se scegli una lingua o chiudi l'avviso lingua). È un dato tecnico, non contiene informazioni personali e non viene inviato ai nostri server.
+              </p>
+              <h2>Protezione antispam</h2>
+              <p>
+                Nella pagina contatti, Cloudflare Turnstile verifica che il modulo sia inviato da una persona. Il servizio può trattare dati tecnici necessari a questo scopo; per i dettagli consulta l'informativa di Cloudflare.
+              </p>
+            </>
+          )
+        }
+        {
+          page === 'cookies' && textLang === 'en' && (
+            <>
+              <h2>Cookies used</h2>
+              <p>
+                This website does not use profiling cookies or analytics tools. There are no third-party maps, videos or social buttons that set cookies, so no consent banner is required.
+              </p>
+              <h2>Local storage</h2>
+              <p>
+                The website only stores your language preference in your browser (if you choose a language or close the language notice). This is technical data, contains no personal information and is never sent to our servers.
+              </p>
+              <h2>Anti-spam protection</h2>
+              <p>
+                On the contact page, Cloudflare Turnstile checks that the form is sent by a person. The service may process technical data needed for this purpose; see Cloudflare's privacy policy for details.
+              </p>
+            </>
+          )
+        }
+        <p class="muted">{t.legal.updated}: <time datetime={updated}>{new Date(updated).toLocaleDateString(lang)}</time></p>
+      </div>
+    </div>
+  </section>
+</Base>

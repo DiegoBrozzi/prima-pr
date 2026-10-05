@@ -1,0 +1,294 @@
+---
+import type { ImageMetadata } from 'astro';
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import Icon from '../components/Icon.astro';
+import ContactBand from '../components/ContactBand.astro';
+import { alternates, categories, categoryUrl, machineUrl, url, useT, type Category, type Lang } from '../i18n';
+import { countByCategory, getMachines, machineAlt, machineDescription, machineName, machineTagline, specValue } from '../lib/data';
+import { organizationLd, websiteLd } from '../lib/seo';
+
+import heroImg from '../assets/img/bkg.jpg';
+import imgHotFoil from '../assets/img/SBL-1060-EFT.jpg';
+import imgDie from '../assets/img/SBL-1060-SE.jpg';
+import imgFolder from '../assets/img/TS-1450W-OK.jpg';
+import imgLam from '../assets/img/accoppiatrice.jpg';
+import imgFlexo from '../assets/img/flessografica.jpg';
+import imgUsed from '../assets/img/usato.jpg';
+import imgGlobal from '../assets/img/global.jpg';
+import imgSmart from '../assets/img/smart.jpg';
+import imgPassion from '../assets/img/passion.jpg';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const h = t.home;
+
+const machines = await getMachines();
+const counts = countByCategory(machines);
+const featured = machines.filter((m) => m.data.madeInItaly);
+const catImages: Record<Category, { src: ImageMetadata; cover?: boolean }> = {
+  'hot-foil': { src: imgHotFoil },
+  'die-cutting': { src: imgDie },
+  'folder-gluer': { src: imgFolder },
+  laminator: { src: imgLam, cover: true },
+  flexo: { src: imgFlexo },
+};
+const valueImgs = [
+  { src: imgGlobal, cls: 'stack-card--global' },
+  { src: imgSmart, cls: 'stack-card--smart' },
+  { src: imgPassion, cls: 'stack-card--passion' },
+];
+const nf = new Intl.NumberFormat(lang, { useGrouping: true });
+const marqueeItems = [
+  ...categories.map((c) => t.categories[c].long),
+  t.home.usedCard,
+  `${t.nav.parts} SBL · Varimatrix`,
+  `${t.servicesPage.items[0].title} · ${t.servicesPage.items[1].title}`,
+];
+const videoLabels: Record<Lang, { pause: string; play: string }> = {
+  it: { pause: 'Metti in pausa il video', play: 'Riproduci il video' },
+  en: { pause: 'Pause video', play: 'Play video' },
+  fr: { pause: 'Mettre la vidéo en pause', play: 'Lire la vidéo' },
+  de: { pause: 'Video pausieren', play: 'Video abspielen' },
+  es: { pause: 'Pausar el vídeo', play: 'Reproducir el vídeo' },
+};
+---
+
+<Base
+  lang={lang}
+  title={t.meta.home.title}
+  description={t.meta.home.description}
+  alternates={alternates((l) => url('home', l))}
+  current="home"
+  jsonLd={[organizationLd(lang), websiteLd(lang)]}
+>
+  <!-- HERO -->
+  <section class="hero dark" aria-labelledby="hero-title">
+    <div class="hero-media" aria-hidden="true">
+      <Img src={heroImg} alt="" sizes="100vw" widths={[800, 1400]} priority />
+      <video data-hero-video data-src="/video/hero-stampa.mp4" muted loop playsinline preload="none" tabindex="-1"></video>
+    </div>
+    <div class="techgrid" aria-hidden="true"></div>
+    <svg class="reg reg--tr" viewBox="0 0 28 28" aria-hidden="true" fill="none" stroke="currentColor"><circle cx="14" cy="14" r="7" /><path d="M14 0v28M0 14h28" /></svg>
+
+    <div class="wrap hero-content">
+      <p class="eyebrow">{h.eyebrow}</p>
+      <h1 id="hero-title">
+        {h.h1.map((line, i) => (
+          <span class="line"><span class={i === 1 ? 'accent' : undefined}>{line}</span></span>
+        ))}
+      </h1>
+      <p class="lead">{h.lead}</p>
+      <div class="btn-row">
+        <a class="btn" href={url('machines', lang)}>{h.ctaPrimary} <Icon name="arrow" class="arrow" /></a>
+        <a class="btn btn--ghost" href={url('contact', lang)}>{h.ctaSecondary}</a>
+        <button
+          class="btn btn--ghost btn--sm"
+          type="button"
+          hidden
+          data-video-toggle
+          aria-pressed="false"
+          data-pause={videoLabels[lang].pause}
+          data-play={videoLabels[lang].play}
+        >
+          <span data-label>{videoLabels[lang].pause}</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="wrap">
+        <dl>
+          {
+            h.stats.map((s) => (
+              <div class="stat">
+                <dt>{s.label}</dt>
+                <dd data-count={s.value} data-suffix={s.suffix}>
+                  {nf.format(s.value)}
+                  {s.suffix}
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+    <a class="hero-scroll" href="#made-in-italy" aria-hidden="true" tabindex="-1">{h.scroll}</a>
+  </section>
+
+  <!-- NASTRO CATEGORIE -->
+  <div class="marquee" data-marquee aria-label={t.machinesPage.categoriesTitle} role="region">
+    <div class="marquee-track">
+      <ul>{marqueeItems.map((i) => <li>{i}</li>)}</ul>
+      <ul aria-hidden="true">{marqueeItems.map((i) => <li>{i}</li>)}</ul>
+    </div>
+  </div>
+
+  <!-- MADE IN ITALY -->
+  <section class="section" id="made-in-italy" aria-labelledby="mii-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">{h.madeEyebrow}</p>
+          <h2 id="mii-title" data-reveal>{h.madeTitle}</h2>
+        </div>
+        <p class="lead" data-reveal>{h.madeLead}</p>
+      </div>
+
+      {
+        featured.map((m, i) => (
+          <article class:list={['feature', { 'feature--flip': i % 2 === 1 }]}>
+            <div class="feature-media cropmarks" data-reveal="cut">
+              <span class="feature-code">{`PT—0${i + 1}`}</span>
+              {m.data.image && <Img src={m.data.image} alt={machineAlt(m, lang)} sizes="(min-width: 1280px) 680px, (min-width: 860px) 52vw, 92vw" widths={[480, 700, 1000, 1200]} />}
+            </div>
+            <div class="feature-body" data-reveal>
+              <p class="cat">{machineTagline(m, lang)}</p>
+              <h3>{machineName(m, lang)}</h3>
+              <p>{machineDescription(m, lang)}</p>
+              <dl class="specs">
+                {m.data.specs.slice(0, 4).map((s) => (
+                  <div>
+                    <dt>{t.specs[s.key]}</dt>
+                    <dd>{specValue(s.value, lang)}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div class="btn-row">
+                <a class="btn btn--navy" href={machineUrl(m.id, lang)}>
+                  {t.common.discover} {machineName(m, lang)} <Icon name="arrow" class="arrow" />
+                </a>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- CATALOGO -->
+  <section class="section section--steel" aria-labelledby="cat-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">{h.catalogEyebrow}</p>
+          <h2 id="cat-title" data-reveal>{h.catalogTitle}</h2>
+        </div>
+        <p class="lead" data-reveal>{h.catalogLead}</p>
+      </div>
+      <ul class="grid grid--3" data-stagger>
+        {
+          categories.map((c) => (
+            <li data-reveal>
+              <article class="card cat-card cropmarks">
+                <div class:list={['card-media', { 'card-media--cover': catImages[c].cover }]}>
+                  <Img src={catImages[c].src} alt="" sizes="(min-width: 1280px) 400px, (min-width: 700px) 45vw, 92vw" widths={[400, 640, 900]} />
+                </div>
+                <div class="card-body">
+                  <p class="count">{(counts[c] === 1 ? t.common.model : t.common.models).replace('{n}', String(counts[c]))}</p>
+                  <h3>
+                    <a href={categoryUrl(c, lang)}>{t.categories[c].long}</a>
+                  </h3>
+                  <div class="card-foot">
+                    <span class="mono">{t.common.discover}</span>
+                    <span class="card-go" aria-hidden="true"><Icon name="arrow" /></span>
+                  </div>
+                </div>
+              </article>
+            </li>
+          ))
+        }
+        <li data-reveal>
+          <article class="card cat-card cat-card--used cropmarks">
+            <div class="card-media card-media--cover">
+              <Img src={imgUsed} alt="" sizes="(min-width: 1280px) 400px, (min-width: 700px) 45vw, 92vw" widths={[400, 640, 900]} />
+            </div>
+            <div class="card-body">
+              <p class="count">{h.usedCardText}</p>
+              <h3><a href={url('used', lang)}>{h.usedCard}</a></h3>
+              <div class="card-foot">
+                <span class="mono">{t.common.discover}</span>
+                <span class="card-go" aria-hidden="true"><Icon name="arrow" /></span>
+              </div>
+            </div>
+          </article>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- VALORI -->
+  <section class="section" aria-labelledby="values-title">
+    <div class="wrap">
+      <div class="section-head section-head--stack">
+        <div>
+          <p class="eyebrow">{h.valuesEyebrow}</p>
+          <h2 id="values-title" class="sr-only">{h.valuesEyebrow}</h2>
+        </div>
+      </div>
+      <ul class="stack">
+        {
+          h.values.map((v, i) => (
+            <li class:list={['stack-card', valueImgs[i].cls]}>
+              <Img src={valueImgs[i].src} alt="" sizes="(min-width: 1280px) 1200px, 100vw" widths={[800, 1200, 1600]} />
+              <div class="body" data-reveal>
+                <span class="idx">0{i + 1} / 03</span>
+                <h3>{v.title}</h3>
+                <p>{v.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- SERVIZI -->
+  <section class="section dark" aria-labelledby="svc-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">{h.servicesEyebrow}</p>
+          <h2 id="svc-title" data-reveal>
+            {h.servicesTitle[0]} <span class="soft">{h.servicesTitle[1]}</span>
+          </h2>
+        </div>
+        <div data-reveal>
+          <a class="link-arrow" href={url('services', lang)}>{h.servicesCta} <Icon name="arrow" class="arrow" /></a>
+        </div>
+      </div>
+      <hr class="dieline" data-reveal="line" />
+      <ol class="svc-list" data-stagger>
+        {
+          h.services.map((s) => (
+            <li data-reveal>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- VENDI L'USATO -->
+  <section class="split" aria-labelledby="sell-title">
+    <div class="split-media parallax">
+      <Img src={imgUsed} alt="" sizes="(min-width: 860px) 50vw, 100vw" widths={[600, 900, 1200]} />
+    </div>
+    <div class="split-body on-dark">
+      <p class="eyebrow eyebrow--light">{h.sellEyebrow}</p>
+      <h2 id="sell-title" data-reveal>{h.sellTitle[0]} {h.sellTitle[1]}</h2>
+      <p data-reveal>{h.sellText}</p>
+      <div class="btn-row" data-reveal>
+        <a class="btn" href={`${url('contact', lang)}?argomento=usedSell`}>{h.sellCta} <Icon name="arrow" class="arrow" /></a>
+        <a class="btn btn--ghost" href={url('used', lang)}>{h.sellCta2}</a>
+      </div>
+    </div>
+  </section>
+
+  <ContactBand lang={lang} />
+</Base>

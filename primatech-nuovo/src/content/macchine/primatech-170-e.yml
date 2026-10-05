@@ -1,0 +1,44 @@
+model: Primatech 170 E
+brand: Primatech
+category: die-cutting
+madeInItaly: true
+order: 1
+image: ../../assets/img/primatech_170-E-16.jpg
+tagline:
+  it: Fustellatrice automatica con estrattore
+  en: Automatic die cutter with stripping
+  fr: Découpeuse automatique avec éjection
+  de: Stanzautomat mit Ausbrechstation
+  es: Troqueladora automática con expulsión
+description:
+  it: "Il grande formato per carta e cartone: mettifoglio pallet non-stop con centratura e controllo elettronico della pressione, per lavorare senza fermi anche su ondulato."
+  en: "Large format for paper and board: non-stop pallet feeder with centring and electronic pressure control, for uninterrupted production, corrugated included."
+  fr: "Le grand format pour papier et carton : margeur à palette non-stop avec centrage et contrôle électronique de la pression, pour produire sans arrêt, ondulé compris."
+  de: "Großformat für Papier und Karton: Nonstop-Palettenanleger mit Zentrierung und elektronischer Druckregelung – für unterbrechungsfreie Produktion, auch bei Wellpappe."
+  es: "El gran formato para papel y cartón: alimentador de palé non-stop con centrado y control electrónico de la presión, para producir sin paradas, incluso en ondulado."
+features:
+  it: [Mettifoglio pallet non-stop, Pila in ingresso fino a 1800 mm, Controllo elettronico della pressione, Centratura automatica del foglio]
+  en: [Non-stop pallet feeder, Feeder pile height up to 1800 mm, Electronic pressure control, Automatic sheet centring]
+  fr: [Margeur à palette non-stop, Hauteur de pile jusqu'à 1800 mm, Contrôle électronique de la pression, Centrage automatique de la feuille]
+  de: [Nonstop-Palettenanleger, Anlegerstapelhöhe bis 1800 mm, Elektronische Druckregelung, Automatische Bogenzentrierung]
+  es: [Alimentador de palé non-stop, Altura de pila de entrada hasta 1800 mm, Control electrónico de la presión, Centrado automático de la hoja]
+specs:
+  - key: sheetMax
+    value: 1200 × 1700 mm
+  - key: sheetMin
+    value: 600 × 800 mm
+  - key: pressure
+    value: 450 t
+  - key: speed
+    value: { it: 5.300 fogli/h, en: "5,300 sheets/h", fr: 5 300 feuilles/h, de: 5.300 Bogen/h, es: 5.300 hojas/h }
+  - key: register
+    value: { it: "± 0,15 mm", en: "± 0.15 mm", fr: "± 0,15 mm", de: "± 0,15 mm", es: "± 0,15 mm" }
+  - key: materials
+    value:
+      it: cartone compatto 0,5–2 mm, ondulato fino a 5 mm
+      en: solid board 0.5–2 mm, corrugated up to 5 mm
+      fr: carton compact 0,5–2 mm, ondulé jusqu'à 5 mm
+      de: Vollpappe 0,5–2 mm, Wellpappe bis 5 mm
+      es: cartón compacto 0,5–2 mm, ondulado hasta 5 mm
+  - key: power
+    value: 35 kW

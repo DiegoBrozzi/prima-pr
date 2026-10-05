@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ContactBand from '../components/ContactBand.astro';
+import Img from '../components/Img.astro';
+import Icon from '../components/Icon.astro';
+import { alternates, url, useT, type Lang } from '../i18n';
+import { breadcrumbLd } from '../lib/seo';
+import heroImg from '../assets/img/formazione.jpg';
+import sblImg from '../assets/img/SBL-1060-SE.jpg';
+import varImg from '../assets/img/var01.jpg';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const p = t.partsPage;
+const brandImgs = [sblImg, varImg];
+const crumbs = [
+  { label: t.nav.home, href: url('home', lang) },
+  { label: t.nav.parts, href: url('parts', lang) },
+];
+const partsHref = `${url('contact', lang)}?argomento=parts`;
+---
+
+<Base
+  lang={lang}
+  title={t.meta.parts.title}
+  description={t.meta.parts.description}
+  alternates={alternates((l) => url('parts', l))}
+  current="parts"
+  jsonLd={[breadcrumbLd(crumbs)]}
+>
+  <PageHero lang={lang} eyebrow={p.eyebrow} title={p.title} lead={p.lead} crumbs={crumbs} image={heroImg}>
+    <div class="btn-row">
+      <a class="btn" href={partsHref}>{p.cta} <Icon name="arrow" class="arrow" /></a>
+    </div>
+  </PageHero>
+
+  <section class="section" aria-labelledby="steps-title">
+    <div class="wrap">
+      <div class="section-head section-head--stack">
+        <div>
+          <p class="eyebrow">{p.eyebrow}</p>
+          <h2 id="steps-title" data-reveal>{p.stepsTitle}</h2>
+        </div>
+      </div>
+      <ol class="steps" data-stagger>
+        {
+          p.steps.map((s) => (
+            <li data-reveal>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--steel" aria-labelledby="brands-title">
+    <div class="wrap">
+      <div class="section-head section-head--stack">
+        <div>
+          <h2 id="brands-title" data-reveal>{p.brandsTitle}</h2>
+        </div>
+      </div>
+      <ul class="grid grid--3" data-stagger>
+        {
+          p.brands.map((b, i) => (
+            <li data-reveal>
+              <article class="card cropmarks">
+                <div class="card-media">
+                  <Img src={brandImgs[i]} alt="" sizes="(min-width: 1280px) 400px, (min-width: 700px) 45vw, 92vw" widths={[400, 640]} />
+                </div>
+                <div class="card-body">
+                  <p class="card-kicker">{p.eyebrow}</p>
+                  <h3>{b.name}</h3>
+                  <p class="card-text">{b.text}</p>
+                </div>
+              </article>
+            </li>
+          ))
+        }
+        <li data-reveal>
+          <article class="card cat-card--used cropmarks">
+            <div class="card-body">
+              <p class="card-kicker">{t.contactPage.directTitle}</p>
+              <h3>{p.stepsTitle}</h3>
+              <p class="card-text">{t.form.machineHint}</p>
+              <div class="card-foot">
+                <a class="btn btn--sm" href={partsHref}>{p.cta} <Icon name="arrow" class="arrow" /></a>
+              </div>
+            </div>
+          </article>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <ContactBand lang={lang} />
+</Base>

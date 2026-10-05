@@ -1,0 +1,101 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import { langMeta, locales, useT, type Alternates, type Lang, type PageKey } from '../i18n';
+import { site } from '../site.config';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  alternates: Alternates;
+  current?: PageKey;
+  jsonLd?: Record<string, unknown>[];
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const { lang, title, description, alternates, current, jsonLd = [], ogImage, noindex = false } = Astro.props;
+const t = useT(lang);
+const abs = (p: string) => new URL(p, site.url).href;
+const canonical = abs(alternates[lang]);
+const og = abs(ogImage ?? '/img/og-image.jpg');
+
+// Testi dell'avviso lingua, nella lingua che verrà suggerita al visitatore
+const bannerData = Object.fromEntries(
+  locales.filter((l) => l !== lang).map((l) => [l, { ...useT(l).langBanner, href: alternates[l] }]),
+);
+---
+
+<!doctype html>
+<html lang={langMeta[lang].hreflang} dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="canonical" href={canonical} />
+    {!noindex && locales.map((l) => <link rel="alternate" hreflang={langMeta[l].hreflang} href={abs(alternates[l])} />)}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={abs(alternates.en)} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Primatech" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta property="og:locale" content={langMeta[lang].og} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="theme-color" content="#0b1224" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+    <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
+
+    <script is:inline>document.documentElement.classList.add('js')</script>
+    {jsonLd.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(jsonLd.length === 1 ? jsonLd[0] : { '@context': 'https://schema.org', '@graph': jsonLd })} />}
+  </head>
+  <body>
+    <a class="skip" href="#main">{t.nav.skip}</a>
+    <Header lang={lang} current={current} alternates={alternates} />
+
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <Footer lang={lang} alternates={alternates} />
+
+    <nav class="mobile-bar" aria-label={t.contactPage.directTitle}>
+      <a href={`tel:${site.phoneHref}`}><Icon name="phone" />{t.common.call}</a>
+      <a href={`mailto:${site.email}`}><Icon name="mail" />{t.common.write}</a>
+      {
+        site.whatsapp && (
+          <a href={`https://wa.me/${site.whatsapp}`} rel="noopener" target="_blank" class="is-primary">
+            <Icon name="whatsapp" />
+            {t.common.whatsapp}
+          </a>
+        )
+      }
+    </nav>
+
+    <div class="lang-banner" role="region" aria-label={t.nav.language} hidden data-lang-banner>
+      <p data-lb-text></p>
+      <div class="btn-row">
+        <a class="btn btn--sm btn--navy" href="#" data-lb-go></a>
+        <button type="button" class="dismiss" data-lb-dismiss></button>
+      </div>
+    </div>
+    <script type="application/json" id="lang-banner-data" set:html={JSON.stringify({ current: lang, options: bannerData })} />
+
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+model: Flessografica per ondulato
+title:
+  it: Flessografica per ondulato
+  en: Flexo printer for corrugated
+  fr: Flexographique pour ondulé
+  de: Flexodruckmaschine für Wellpappe
+  es: Flexográfica para ondulado
+category: flexo
+order: 10
+image: ../../assets/img/flessografica.jpg
+tagline:
+  it: Stampa e fustellatura in linea per cartone ondulato
+  en: Inline printing and die cutting for corrugated board
+  fr: Impression et découpe en ligne pour carton ondulé
+  de: Inline-Druck und -Stanzen für Wellpappe
+  es: Impresión y troquelado en línea para cartón ondulado

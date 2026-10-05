@@ -1,0 +1,193 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { alternates, url, useT, type Lang } from '../i18n';
+import { breadcrumbLd, organizationLd } from '../lib/seo';
+import { site } from '../site.config';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const f = t.form;
+const crumbs = [
+  { label: t.nav.home, href: url('home', lang) },
+  { label: t.nav.contact, href: url('contact', lang) },
+];
+const messages = JSON.stringify({
+  ...f.errors,
+  send: f.errors.send.replace('{email}', site.email),
+  sending: f.sending,
+});
+const topics = Object.entries(f.topics) as [keyof typeof f.topics, string][];
+---
+
+<Base
+  lang={lang}
+  title={t.meta.contact.title}
+  description={t.meta.contact.description}
+  alternates={alternates((l) => url('contact', l))}
+  current="contact"
+  jsonLd={[organizationLd(lang), breadcrumbLd(crumbs)]}
+>
+  <PageHero lang={lang} eyebrow={t.contactPage.eyebrow} title={t.contactPage.title} lead={t.contactPage.lead} crumbs={crumbs} />
+
+  <section class="section">
+    <div class="wrap contact-grid">
+      <div>
+        <h2 id="form-title" class="form-title">{t.contactPage.formTitle}</h2>
+        <p class="muted form-note">{f.requiredNote}</p>
+
+        <form
+          class="form"
+          method="post"
+          action="/api/contatto"
+          aria-labelledby="form-title"
+          data-contact-form
+          data-thanks={url('thanks', lang)}
+          data-messages={messages}
+        >
+          <input type="hidden" name="lang" value={lang} />
+          <input type="hidden" name="ts" value="" />
+
+          <div class="field">
+            <label for="f-name">{f.name}</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120" aria-describedby="f-name-error" />
+            <p class="error" id="f-name-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="f-company">{f.company}</label>
+            <input id="f-company" name="company" type="text" autocomplete="organization" required maxlength="160" aria-describedby="f-company-error" />
+            <p class="error" id="f-company-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="f-email">{f.email}</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200" spellcheck="false" aria-describedby="f-email-error" />
+            <p class="error" id="f-email-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="f-phone">{f.phone} <span class="opt">({f.optional})</span></label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" aria-describedby="f-phone-error" />
+            <p class="error" id="f-phone-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="f-country">{f.country}</label>
+            <input id="f-country" name="country" type="text" autocomplete="country-name" required maxlength="80" aria-describedby="f-country-error" />
+            <p class="error" id="f-country-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="f-topic">{f.topic}</label>
+            <select id="f-topic" name="topic" required aria-describedby="f-topic-error">
+              {topics.map(([k, v]) => <option value={k}>{v}</option>)}
+            </select>
+            <p class="error" id="f-topic-error" hidden></p>
+          </div>
+          <div class="field full">
+            <label for="f-machine">{f.machine} <span class="opt">({f.optional})</span></label>
+            <input id="f-machine" name="machine" type="text" maxlength="160" aria-describedby="f-machine-hint f-machine-error" />
+            <p class="hint" id="f-machine-hint">{f.machineHint}</p>
+            <p class="error" id="f-machine-error" hidden></p>
+          </div>
+          <div class="field full">
+            <label for="f-message">{f.message}</label>
+            <textarea id="f-message" name="message" required maxlength="4000" rows="6" aria-describedby="f-message-hint f-message-error"></textarea>
+            <p class="hint" id="f-message-hint">{f.messageHint}</p>
+            <p class="error" id="f-message-error" hidden></p>
+          </div>
+
+          <!-- Campo trappola per i bot: invisibile e ignorato dalle persone -->
+          <div class="hp" aria-hidden="true">
+            <label for="f-website">Website</label>
+            <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="field full">
+            <div class="check">
+              <input id="f-privacy" name="privacy" type="checkbox" value="yes" required aria-describedby="f-privacy-error" />
+              <label for="f-privacy">
+                {f.privacyBefore}<a href={url('privacy', lang)} target="_blank" rel="noopener">{f.privacyLink}<span class="sr-only"> {t.common.newWindow}</span></a>{f.privacyAfter}
+              </label>
+            </div>
+            <p class="error" id="f-privacy-error" hidden></p>
+          </div>
+
+          {site.turnstileSiteKey && <div class="full cf-turnstile" data-sitekey={site.turnstileSiteKey} data-language={lang} data-theme="light"></div>}
+
+          <p class="form-status full" role="alert" tabindex="-1" data-form-status></p>
+
+          <div class="full">
+            <button class="btn" type="submit"><span data-label>{f.submit}</span> <Icon name="arrow" class="arrow" /></button>
+          </div>
+        </form>
+      </div>
+
+      <aside class="contact-card" aria-labelledby="direct-title">
+        <h2 id="direct-title" class="sr-only">{t.contactPage.directTitle}</h2>
+        <dl>
+          <div>
+            <dt>{t.common.phone}</dt>
+            <dd><a href={`tel:${site.phoneHref}`}>{site.phone}</a></dd>
+          </div>
+          <div>
+            <dt>{t.common.email}</dt>
+            <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+          </div>
+          {
+            site.whatsapp && (
+              <div>
+                <dt>{t.common.whatsapp}</dt>
+                <dd>
+                  <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener">
+                    {t.common.whatsapp}
+                    <span class="sr-only"> {t.common.newWindow}</span>
+                  </a>
+                </dd>
+              </div>
+            )
+          }
+          <div>
+            <dt>{t.common.address}</dt>
+            <dd>
+              <address>
+                Primatech srl<br />{site.address.street}<br />{`${site.address.postalCode} ${site.address.locality} (${site.address.region})`}<br />Italia
+              </address>
+            </dd>
+          </div>
+          <div>
+            <dt>{t.common.vat}</dt>
+            <dd>{site.vatDisplay}</dd>
+          </div>
+        </dl>
+
+        <div>
+          <h3 class="map-title">{t.contactPage.mapTitle}</h3>
+          <p class="muted map-text">{t.contactPage.mapText}</p>
+          <a class="mapcard" href={site.mapsUrl} target="_blank" rel="noopener">
+            <svg viewBox="0 0 400 300" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+              <g fill="none" stroke="rgb(255 255 255 / .12)">
+                <path d="M-20 60c80-30 160 20 240-10s140-40 200 0" />
+                <path d="M-20 100c90-30 150 30 250 0s130-30 190 10" />
+                <path d="M-20 150c70-20 170 30 250 0s120-20 190 10" />
+                <path d="M-20 200c90-20 160 20 250-10s120-10 190 20" />
+                <path d="M-20 250c100-10 170 20 260-10s110 0 180 20" />
+              </g>
+              <g stroke="rgb(255 255 255 / .35)" fill="none">
+                <path d="M200 0v300M0 150h400" stroke-dasharray="4 6" />
+                <circle cx="200" cy="150" r="46" />
+                <circle cx="200" cy="150" r="92" stroke-opacity=".5" />
+              </g>
+            </svg>
+            <span class="pin" aria-hidden="true"></span>
+            <span class="coords" aria-hidden="true">{site.address.postalCode} · PERUGIA · IT</span>
+            <span class="go"><span>{t.common.openMaps}</span><Icon name="arrow-up-right" /></span>
+            <span class="sr-only">{t.common.newWindow}</span>
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {site.turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+</Base>

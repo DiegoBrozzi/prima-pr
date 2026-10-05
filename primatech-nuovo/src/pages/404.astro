@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { alternates, url, useT } from '../i18n';
+
+const t = useT('it');
+const en = useT('en');
+---
+
+<Base lang="it" title={t.meta.notFound.title} description={t.meta.notFound.description} alternates={alternates((l) => url('home', l))} noindex>
+  <PageHero lang="it" eyebrow="404" title={t.notFound.title} lead={t.notFound.text}>
+    <p class="lead" lang="en">{en.notFound.title} {en.notFound.text}</p>
+    <div class="btn-row">
+      <a class="btn" href={url('home', 'it')}>{t.notFound.cta} <Icon name="arrow" class="arrow" /></a>
+      <a class="btn btn--ghost" href={url('home', 'en')} lang="en">{en.notFound.cta}</a>
+    </div>
+  </PageHero>
+</Base>

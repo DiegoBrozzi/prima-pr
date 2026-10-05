@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import MachineCard from '../components/MachineCard.astro';
+import ContactBand from '../components/ContactBand.astro';
+import Icon from '../components/Icon.astro';
+import { alternates, categories, url, useT, type Lang } from '../i18n';
+import { countByCategory, getMachines } from '../lib/data';
+import { breadcrumbLd } from '../lib/seo';
+import heroImg from '../assets/img/primatech_170-E-16.jpg';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const machines = await getMachines();
+const counts = countByCategory(machines);
+const crumbs = [
+  { label: t.nav.home, href: url('home', lang) },
+  { label: t.nav.machines, href: url('machines', lang) },
+];
+---
+
+<Base
+  lang={lang}
+  title={t.meta.machines.title}
+  description={t.meta.machines.description}
+  alternates={alternates((l) => url('machines', l))}
+  current="machines"
+  jsonLd={[breadcrumbLd(crumbs)]}
+>
+  <PageHero lang={lang} eyebrow={t.machinesPage.eyebrow} title={t.machinesPage.title} lead={t.machinesPage.lead} crumbs={crumbs} image={heroImg} />
+
+  <section class="section section--steel" aria-labelledby="list-title">
+    <div class="wrap">
+      <h2 id="list-title" class="sr-only">{t.machinesPage.categoriesTitle}</h2>
+      <div class="filters" role="group" aria-label={t.common.filter} data-filter-group="machine-list" hidden>
+        <button type="button" data-filter="all" aria-pressed="true">{t.common.all}<span class="n">{machines.length}</span></button>
+        {
+          categories.map((c) => (
+            <button type="button" data-filter={c} aria-pressed="false">
+              {t.categories[c].name}
+              <span class="n">{counts[c]}</span>
+            </button>
+          ))
+        }
+      </div>
+      <p class="sr-only" role="status" aria-live="polite" data-filter-status data-template={t.common.showing}></p>
+      <ul class="grid grid--3" id="machine-list">
+        {
+          machines.map((m) => (
+            <li data-cat={m.data.category}>
+              <MachineCard m={m} lang={lang} />
+            </li>
+          ))
+        }
+      </ul>
+      <div class="hint-bar">
+        <p>{t.machinesPage.usedHint}</p>
+        <a class="link-arrow" href={url('used', lang)}>{t.machinesPage.usedHintCta} <Icon name="arrow" class="arrow" /></a>
+      </div>
+    </div>
+  </section>
+
+  <ContactBand lang={lang} />
+</Base>

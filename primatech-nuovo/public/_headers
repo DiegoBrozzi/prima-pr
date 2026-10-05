@@ -1,0 +1,32 @@
+# Intestazioni HTTP per Cloudflare Pages.
+# La CSP consente solo risorse dal dominio, più Cloudflare Turnstile per il modulo contatti.
+# L'hash sha256 corrisponde all'unico script inline (aggiunge la classe "js"): lo verifica scripts/check-csp.mjs a ogni build.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo=' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
+  X-Frame-Options: DENY
+  Cross-Origin-Opener-Policy: same-origin
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/video/*
+  Cache-Control: public, max-age=2592000
+
+/img/*
+  Cache-Control: public, max-age=2592000
+
+# Pannello usato: richiede GitHub per login e salvataggio
+/admin/*
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.githubusercontent.com https://github.com; font-src 'self' data:; connect-src 'self' https://api.github.com https://*.githubusercontent.com https://*.workers.dev; frame-src 'none'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-cache
+
+/api/*
+  X-Robots-Tag: noindex
+  Cache-Control: no-store
